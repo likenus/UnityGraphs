@@ -1,0 +1,25 @@
+To be implemented:
+- Tooltips, Hilfe-menu
+- Weitere Algorithmen
+- Färbbare Knoten
+- ...
+
+Version Beta 0.5
+- UI wurde mit den neuen Algorithmen geupdatet
+- Knoten haben nun ein Label für Distanzen
+- Fixed: Bug für Dijkstra im gerichteten Graphen
+
+Version Beta 0.4
+- Neuer Algorithmus: Dijkstra
+
+Version Beta 0.3
+- Kantengewichte implementiert
+- Gerichtet/Ungerichtet jetzt per toggle
+
+Version Beta 0.2
+- Neuer Algorithmus: DFS
+- Visualisierung der BFS
+- Gerichtete Kanten implementiert
+
+Version Beta 0.1
+- Erste Version der Graph Datenstruktur implementiert
