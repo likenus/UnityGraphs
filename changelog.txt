@@ -8,6 +8,10 @@ To be implemented:
 - Speichern und Laden von verschiedenen Graphen
 - ...
 
+Version Beta 0.7
+- Pause Menu hinzugefügt: Pausiert Algorithmen und kann den Graphen zurücksetzen
+- Fixed: Bug in Dijkstra implementation
+
 Version Beta 0.6
 - Speichert nun den Graphen und lädt diesen on Startup
 - Minor Bug Fixes
