@@ -2,7 +2,15 @@ To be implemented:
 - Tooltips, Hilfe-menu
 - Weitere Algorithmen
 - Färbbare Knoten
+- Hotkeys
+- UI an Auflösung anpassen
+- Algorithm Pause/Play System
+- Speichern und Laden von verschiedenen Graphen
 - ...
+
+Version Beta 0.6
+- Speichert nun den Graphen und lädt diesen on Startup
+- Minor Bug Fixes
 
 Version Beta 0.5
 - UI wurde mit den neuen Algorithmen geupdatet
