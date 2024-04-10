@@ -5,33 +5,35 @@ To be implemented:
 - Hotkeys
 - UI an Auflösung anpassen
 - Algorithm Pause/Play System
-- Speichern und Laden von verschiedenen Graphen
 - ...
 
-Version Beta 0.7
+Version 1.0.0
+- Speichern und Laden von Graphen vollständig implementiert inklusive nötwendiges UI
+
+Version 0.7.0 Beta 
 - Pause Menu hinzugefügt: Pausiert Algorithmen und kann den Graphen zurücksetzen
 - Fixed: Bug in Dijkstra implementation
 
-Version Beta 0.6
+Version 0.6.0 Beta
 - Speichert nun den Graphen und lädt diesen on Startup
 - Minor Bug Fixes
 
-Version Beta 0.5
+Version 0.5.0 Beta
 - UI wurde mit den neuen Algorithmen geupdatet
 - Knoten haben nun ein Label für Distanzen
 - Fixed: Bug für Dijkstra im gerichteten Graphen
 
-Version Beta 0.4
+Version 0.4.0 Beta
 - Neuer Algorithmus: Dijkstra
 
-Version Beta 0.3
+Version 0.3.0 Beta
 - Kantengewichte implementiert
 - Gerichtet/Ungerichtet jetzt per toggle
 
-Version Beta 0.2
+Version 0.2.0 Beta
 - Neuer Algorithmus: DFS
 - Visualisierung der BFS
 - Gerichtete Kanten implementiert
 
-Version Beta 0.1
+Version 0.1.0 Beta
 - Erste Version der Graph Datenstruktur implementiert
