@@ -11,4 +11,5 @@ Das zweite implementierte Tool ist nur zum Löschen von Knoten/Kanten gedacht. E
 
 Alle sonstigen UI Elemente sind mittels Mausklick interagierbar.
 
-Es sind noch keine Hotkeys vorhanden, sobald diese implementiert sind werden die Mappings hier gelistet.
+Hotkey Mappings :
+[C] -> Macht das gleiche was Rechtsklick im Edit Tool macht
