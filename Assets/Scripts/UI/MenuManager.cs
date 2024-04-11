@@ -18,21 +18,22 @@ public class MenuManager : MonoBehaviour
 	public static bool Paused { get; private set; }
 	public TMP_InputField textPrompt;
 	public InputController inputManager;
+	public CameraController cameraController;
 	private PauseMenuActions inputActions;
-	
+
 	private void Start()
 	{
 		Paused = false;
 		gameUI.enabled = true;
 		pauseUI.enabled = saveUI.enabled = loadUI.enabled = false;
-		UpdateLoadMenuContent();
+		InitializeLoadMenuContent();
 	}
-	
+
 	private void Awake()
 	{
 		inputActions = new PauseMenuActions();
 	}
-	
+
 	private void OnEnable()
 	{
 		inputActions.Player.PauseMenu.started += ToggleMenu;
@@ -43,25 +44,26 @@ public class MenuManager : MonoBehaviour
 	{
 		TogglePauseMenu();
 	}
-	
+
 	public void TogglePauseMenu()
 	{
 		Paused = !Paused;
 		if (Paused) { Time.timeScale = 0; }
 		else { Time.timeScale = 1; }
 
+		cameraController.enabled = !Paused;
 		inputManager.gameObject.SetActive(!Paused);
 		gameUI.enabled = !Paused;
 		pauseUI.enabled = Paused;
 		saveUI.enabled = loadUI.enabled = false;
 	}
-	
+
 	public void ToggleSaveMenu()
 	{
 		pauseUI.enabled = !pauseUI.enabled;
 		saveUI.enabled = !saveUI.enabled;
 	}
-	
+
 	public void ToggleLoadMenu()
 	{
 		pauseUI.enabled = !pauseUI.enabled;
@@ -72,14 +74,15 @@ public class MenuManager : MonoBehaviour
 	{
 		inputActions.Player.PauseMenu.started -= ToggleMenu;
 	}
-	
+
 	public void ResetGraph()
 	{
 		inputManager.graph.Clear();
 		DataPersistenceManager.Instance.NewGame();
+		DataPersistenceManager.Instance.FileName = "";
 		DataPersistenceManager.Instance.LoadGame();
 	}
-	
+
 	public void SaveGraph()
 	{
 		string fileName = textPrompt.text;
@@ -88,12 +91,13 @@ public class MenuManager : MonoBehaviour
 			Debug.LogError("Invalid filename.");
 			return;
 		}
-		
+
 		DataPersistenceManager.Instance.FileName = fileName;
 		DataPersistenceManager.Instance.SaveGame();
 		ToggleSaveMenu();
+		UpdateLoadMenuContent(fileName);
 	}
-	
+
 	private List<string> LoadSavedFiles()
 	{
 		string fullPath = Path.Combine(Path.GetFullPath("."), "Data", "graphs");
@@ -111,7 +115,7 @@ public class MenuManager : MonoBehaviour
 		}
 		return new List<string>();
 	}
-	
+
 	public void OnLoadClick(string fileName)
 	{
 		DataPersistenceManager.Instance.FileName = fileName;
@@ -119,16 +123,25 @@ public class MenuManager : MonoBehaviour
 		TogglePauseMenu();
 	}
 
-	public void UpdateLoadMenuContent()
+	public void InitializeLoadMenuContent()
 	{
 		List<string> savedFiles = LoadSavedFiles();
-		foreach (string file in savedFiles)
+		foreach (string fileName in savedFiles)
 		{
 			GameObject gameObject = Instantiate(scrollPrefab, content);
 			TMP_Text text = gameObject.GetComponentInChildren<TMP_Text>();
 			Button button = gameObject.GetComponent<Button>();
-			button.onClick.AddListener(delegate	 {OnLoadClick(file);});
-			text.text = file;
+			button.onClick.AddListener(delegate { OnLoadClick(fileName); });
+			text.text = Path.GetFileNameWithoutExtension(fileName);
 		}
+	}
+
+	private void UpdateLoadMenuContent(string fileName)
+	{
+		GameObject gameObject = Instantiate(scrollPrefab, content);
+		TMP_Text text = gameObject.GetComponentInChildren<TMP_Text>();
+		Button button = gameObject.GetComponent<Button>();
+		button.onClick.AddListener(delegate { OnLoadClick(fileName); });
+		text.text = Path.GetFileNameWithoutExtension(fileName);
 	}
 }

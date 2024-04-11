@@ -84,7 +84,7 @@ public class EditTool : ITool
 	public void LeftReleased(InputAction.CallbackContext context)
 	{
 		if (selectedForMove == null) { return; }
-		selectedForMove.GetComponent<Renderer>().material.color = oldColors[leftClickCache]; // FIXME Nullpointer occuring
+		selectedForMove.GetComponent<Renderer>().material.color = oldColors[leftClickCache];
 		foreach (Vertex vertex in graph.NeighboursOf(leftClickCache).Item1)
 		{
 			vertex.gameObject.GetComponent<Renderer>().material.color = oldColors[vertex];
