@@ -9,7 +9,7 @@ To be implemented:
 
 Version 1.1.0
 - Hotkey [C] für [C]onnect, alternativ zum Rechtsklick im Edit-Tool (intended für Trackpads)
-- Edit Tool kann jetzt mit Shift Knoten aufs unterliegende Grid snappen
+- Edit Tool kann jetzt mit LShift Knoten aufs unterliegende Grid snappen
 - Man kann jetzt Raus- und Reinzoomen
 - Minimaler Animationspeed auf 0.25 geändert
 - Fixed: Load Menu zeigt jetzt alle gespeicherten Objekte korrekt an
