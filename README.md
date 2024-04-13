@@ -13,5 +13,7 @@ Alle sonstigen UI Elemente sind mittels Mausklick interagierbar.
 
 Hotkey Mappings :
 [C] -> Macht das gleiche was Rechtsklick im Edit Tool macht
+
 [Space] -> Pause/Play
+
 [.] Step Forward (Macht einen einzelnen Algorithmus Schritt, nur im PauseMenu wirksam)
