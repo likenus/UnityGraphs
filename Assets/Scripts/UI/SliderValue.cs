@@ -9,6 +9,6 @@ public class SliderValue : MonoBehaviour
 
 	public void OnSliderUpdate()
 	{
-		text.text = string.Format("{0:f1}", slider.value);
+		text.text = string.Format("{0:f2}", slider.value);
 	}
 }

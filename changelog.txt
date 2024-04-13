@@ -1,11 +1,13 @@
 To be implemented:
 - Tooltips, Hilfe-menu
 - Weitere Algorithmen
-- Färbbare Knoten
+- Färbbare Knoten   
 - Hotkeys
-- UI an Auflösung anpassen
-- Algorithm Pause/Play System
-- ...
+
+Version 1.2.0
+- Algorithmen haben jetzt ein Play-Back-System mit Stop/Reset, Pause/Play [Space], StepForward [.]
+- UI matched nun Auflösung
+- Fixed: IsDirected Button und Graph.IsDirected nicht mehr inkonsistent on Load
 
 Version 1.1.0
 - Hotkey [C] für [C]onnect, alternativ zum Rechtsklick im Edit-Tool (intended für Trackpads)
@@ -13,6 +15,7 @@ Version 1.1.0
 - Man kann jetzt Raus- und Reinzoomen
 - Minimaler Animationspeed auf 0.25 geändert
 - Fixed: Load Menu zeigt jetzt alle gespeicherten Objekte korrekt an
+- Fix v1.1.1: Directed und ShowWeight Buttons funktionieren wieder
 
 Version 1.0.0
 - Speichern und Laden von Graphen vollständig implementiert inklusive nötwendiges UI

@@ -47,9 +47,8 @@ public class MenuManager : MonoBehaviour
 
 	public void TogglePauseMenu()
 	{
-		Paused = !Paused;
-		if (Paused) { Time.timeScale = 0; }
-		else { Time.timeScale = 1; }
+		PlayBackSystem.TogglePause();
+		Paused = PlayBackSystem.Paused;
 
 		cameraController.enabled = !Paused;
 		inputManager.gameObject.SetActive(!Paused);

@@ -73,7 +73,7 @@ public class EditTool : ITool
 				}
 				catch (FormatException)
 				{
-					Debug.Log("Invalid input sequence");
+					Debug.LogError("Invalid input sequence");
 					return;
 				}
 				edge.Weight = value;

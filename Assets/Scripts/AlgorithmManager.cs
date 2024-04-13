@@ -73,7 +73,15 @@ public class AlgorithmManager : MonoBehaviour
 		graph.StartVertex.Text = distances[graph.StartVertex.id].ToString();
 		q.Enqueue(graph.StartVertex);
 
-		yield return new WaitForSeconds(1f / animationSpeed);
+		if (!PlayBackSystem.Paused)
+		{
+			yield return new WaitForSecondsRealtime(1f / animationSpeed);
+		}
+		else 
+		{
+			yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+			PlayBackSystem.DoAlgorithmStep = false;
+		}
 
 		while (q.Count > 0)
 		{
@@ -98,14 +106,13 @@ public class AlgorithmManager : MonoBehaviour
 
 				if (!PlayBackSystem.Paused)
 				{
-					yield return new WaitForSeconds(1f / animationSpeed);
+					yield return new WaitForSecondsRealtime(1f / animationSpeed);
 				}
-				else 
+				if (PlayBackSystem.Paused)
 				{
-					yield return new WaitForNextFrameUnit();
+					yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+					PlayBackSystem.DoAlgorithmStep = false;
 				}
-				
-					
 			}
 		}
 	}
@@ -135,7 +142,16 @@ public class AlgorithmManager : MonoBehaviour
 			if (parents[u.id] != null)
 				graph.EdgeBetween(parents[u.id], u).Paint();
 				
-			yield return new WaitForSeconds(1f / animationSpeed);
+			if (!PlayBackSystem.Paused)
+			{
+				yield return new WaitForSecondsRealtime(1f / animationSpeed);
+			}
+			if (PlayBackSystem.Paused)
+			{
+				yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+				PlayBackSystem.DoAlgorithmStep = false;
+			}
+			
 			foreach (Vertex v in graph.NeighboursOf(u).Item1)
 			{
 				Edge edge = graph.EdgeBetween(u, v);
@@ -169,7 +185,15 @@ public class AlgorithmManager : MonoBehaviour
 		foreach (Vertex u in graph.NeighboursOf(s).Item1)
 		{
 			if (u == p || u.Colored) { continue; }
-			yield return new WaitForSeconds(1f / animationSpeed);
+			if (!PlayBackSystem.Paused)
+			{
+				yield return new WaitForSecondsRealtime(1f / animationSpeed);
+			}
+			if (PlayBackSystem.Paused)
+			{
+				yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+				PlayBackSystem.DoAlgorithmStep = false;	
+			}
 			yield return StartCoroutine(DoDFS(u, s));
 		}
 	}

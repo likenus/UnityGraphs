@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Graph : MonoBehaviour, IDataPersistence
 {
 	public GameObject edgePrefab;
 	public GameObject vertexPrefab;
+	public Toggle directedToggle;
 
 	public SortedDictionary<int, Vertex> Vertices { get; private set; } = new();
 	public List<Edge> Edges { get; private set; } = new();
@@ -65,7 +67,7 @@ public class Graph : MonoBehaviour, IDataPersistence
 	{
 		Clear();
 		id = data.graphId;
-		IsDirected = data.isDirected;
+		directedToggle.isOn = data.isDirected;
 		for (int i = 0; i < data.vertexIDs.Count; i++)
 		{
 			Vertex v = SpawnVertex(data.vertexPositions[i], data.vertexIDs[i]);
@@ -159,7 +161,7 @@ public class Graph : MonoBehaviour, IDataPersistence
 		GameObject newEdge = Instantiate(edgePrefab);
 		newEdge.transform.SetParent(transform);
 		Edge edge = newEdge.GetComponentInChildren<Edge>();
-		edge.IsDirected = IsDirected;
+		edge.IsDirected = this.IsDirected;
 		edge.ShowWeight = ShowWeight;
 		edge.vertices = (vertex1, vertex2);
 		edge.Weight = weight;

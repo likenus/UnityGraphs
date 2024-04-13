@@ -1,0 +1,54 @@
+{
+    "name": "PlayBackActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "61e9be48-9476-44da-8b9b-ccf1917b7812",
+            "actions": [
+                {
+                    "name": "PausePlay",
+                    "type": "Button",
+                    "id": "42526720-52fb-43db-bf5d-7b107f419741",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Step",
+                    "type": "Button",
+                    "id": "6383857c-68c8-4085-b2f7-fcf7cf91a89a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "133627c2-277f-498e-a805-236a4ac97918",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PausePlay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "89326caa-7cdc-4b84-85eb-9f1ace1fabe9",
+                    "path": "<Keyboard>/period",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Step",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
