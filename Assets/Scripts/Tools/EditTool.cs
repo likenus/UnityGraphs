@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class EditTool : ITool
 {
 	private readonly Graph graph;
 	private LayerMask selectLayer;
-	private LayerMask colliderLayer;
 	private GameObject selectedForMove;
 	private Vertex leftClickCache = null;
 	private Vertex rightClickCache = null;
@@ -19,11 +19,10 @@ public class EditTool : ITool
 	private readonly InputController inputController;
 	private readonly Dictionary<Vertex, Color> oldColors = new();
 
-	public EditTool(Graph graph, LayerMask selectLayer, LayerMask colliderLayer, InputController inputController)
+	public EditTool(Graph graph, LayerMask selectLayer, InputController inputController)
 	{
 		this.graph = graph;
 		this.selectLayer = selectLayer;
-		this.colliderLayer = colliderLayer;
 		this.inputController = inputController;
 	}
 
@@ -31,17 +30,15 @@ public class EditTool : ITool
 	{
 		if (selectedForMove != null)
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Vector3 mousePosition = Input.mousePosition;
+			mousePosition.z = 0;
 
-			if (Physics.Raycast(ray, out RaycastHit hit, 100, colliderLayer))
-			{
-				Vector3 pointToMove = hit.point + offset;
-				if (snapping)
-					selectedForMove.transform.localPosition =
-						new Vector3((float)Math.Round(pointToMove.x), (float)Math.Round(pointToMove.y), 0);
-				if (!snapping)
-					selectedForMove.transform.localPosition = new Vector3(pointToMove.x, pointToMove.y, 0);
-			}
+			Vector3 pointToMove = Camera.main.ScreenToWorldPoint(mousePosition) + offset;
+			if (snapping)
+				selectedForMove.transform.localPosition =
+					new Vector3((float)Math.Round(pointToMove.x), (float)Math.Round(pointToMove.y), 0);
+			if (!snapping)
+				selectedForMove.transform.localPosition = new Vector3(pointToMove.x, pointToMove.y, 0);
 		}
 	}
 
@@ -79,10 +76,12 @@ public class EditTool : ITool
 				edge.Weight = value;
 			}
 		}
-		else if (Physics.Raycast(ray, out hit, 100, colliderLayer))
+		else if(!EventSystem.current.IsPointerOverGameObject())
 		{
+			Vector3 mousePosition = Input.mousePosition;
+			mousePosition.z = 0;
 			selectedForMove = graph.gameObject;
-			offset = selectedForMove.transform.position - new Vector3(hit.point.x, hit.point.y, 0);
+			offset = selectedForMove.transform.position - Camera.main.ScreenToWorldPoint(mousePosition);
 		}
 	}
 

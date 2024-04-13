@@ -14,7 +14,7 @@ public class InputController : MonoBehaviour
 	private void Awake()
 	{
 		inputActions = new SelectActions();
-		tool = new EditTool(graph, selectLayer, colliderLayer, this);
+		tool = new EditTool(graph, selectLayer, this);
 	}
 	
 	private void Update()
@@ -79,7 +79,7 @@ public class InputController : MonoBehaviour
 	public void SetCreateTool()
 	{
 		OnDisable();
-		tool = new EditTool(graph, selectLayer, colliderLayer, this);
+		tool = new EditTool(graph, selectLayer, this);
 		OnEnable();
 	}
 

@@ -1,4 +1,3 @@
-using System;
 
 public class BinaryHeap
 {
@@ -35,7 +34,6 @@ public class BinaryHeap
 		Size--;
 		if (Size > 0)
 			SinkDown(content[0]);
-		
 		return v;
 	}
 	

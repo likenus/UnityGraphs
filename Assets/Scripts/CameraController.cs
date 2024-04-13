@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
 {
 	public Camera mainCamera;
 	private CameraActions inputActions;
-	public float mouseScrollY = 0;
 	
 	private void Awake()
 	{
@@ -22,7 +21,7 @@ public class CameraController : MonoBehaviour
 
 	private void ChangeZoom(InputAction.CallbackContext context)
 	{
-		mouseScrollY = context.ReadValue<float>();
+		float mouseScrollY = context.ReadValue<float>();
 		if (mouseScrollY > 0) // Scrolled up
 		{
 			mainCamera.orthographicSize -= mainCamera.orthographicSize < 0.5f ? 0f : 0.1f;

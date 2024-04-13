@@ -9,6 +9,7 @@ Version 1.2.0
 - UI matched nun Auflösung
 - Fixed: IsDirected Button und Graph.IsDirected nicht mehr inkonsistent on Load
 - Feature v1.2.1: Man kann nun den gesamten Graphen bewegen
+- Fix v1.2.2: Binary Heap in Dijkstra aktualisiert
 
 Version 1.1.0
 - Hotkey [C] für [C]onnect, alternativ zum Rechtsklick im Edit-Tool (intended für Trackpads)
