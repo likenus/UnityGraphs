@@ -88,7 +88,7 @@ public class Graph : MonoBehaviour, IDataPersistence
 		data.graphId = id;
 		data.isDirected = IsDirected;
 		data.startVertexID = StartVertex.id;
-		data.vertexPositions = Vertices.Values.Select(v => v.transform.position).ToList();
+		data.vertexPositions = Vertices.Values.Select(v => v.transform.localPosition).ToList();
 		data.vertexIDs = Vertices.Values.Select(v => v.id).ToList();
 		data.edges = Edges.Select(e => new Vector3(e.vertices.Item1.id, e.vertices.Item2.id, e.Weight)).ToList();
 	}
@@ -113,7 +113,7 @@ public class Graph : MonoBehaviour, IDataPersistence
 	{
 		GameObject newVertex = Instantiate(vertexPrefab);
 		newVertex.transform.SetParent(transform);
-		newVertex.transform.position = position;
+		newVertex.transform.localPosition = position;
 		Vertex v = newVertex.GetComponent<Vertex>();
 		v.ShowWeight = ShowWeight;
 		v.id = vid;
