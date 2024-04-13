@@ -3,6 +3,7 @@ using UnityEngine;
 public class EdgeTip : MonoBehaviour
 {
 	public Transform body;
+	public MeshRenderer mesh;
 	public float offset = 0.5f;
 
 	private void Update()

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Edge : MonoBehaviour
 {
 	public GameObject container;
-	public GameObject tip;
+	public EdgeTip tip;
 	public (Vertex, Vertex) vertices;
 	private int _weight = 1;
 	public TMP_Text label;
@@ -33,7 +33,7 @@ public class Edge : MonoBehaviour
 		set
 		{
 			_isDirected = value;
-			tip.SetActive(value);
+			tip.mesh.enabled = value;
 		}
 	}
 	public int Weight
@@ -52,7 +52,7 @@ public class Edge : MonoBehaviour
 	private void Start()
 	{
 		defaultColor = GetComponent<Renderer>().material.color;
-		tip.SetActive(IsDirected);
+		tip.mesh.enabled = IsDirected;
 		label.enabled = ShowWeight;
 	}
 	

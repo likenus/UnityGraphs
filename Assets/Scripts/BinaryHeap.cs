@@ -97,7 +97,7 @@ public class BinaryHeap
 		if (!u.Equals(v))
 		{
 			Swap(u, v);
-			SinkDown(u);
+			SinkDown(v);
 		}
 	}
 	
