@@ -8,6 +8,7 @@ Version 1.2.0
 - Algorithmen haben jetzt ein Play-Back-System mit Stop/Reset, Pause/Play [Space], StepForward [.]
 - UI matched nun Auflösung
 - Fixed: IsDirected Button und Graph.IsDirected nicht mehr inkonsistent on Load
+- Feature v1.2.1: Man kann nun den gesamten Graphen bewegen
 
 Version 1.1.0
 - Hotkey [C] für [C]onnect, alternativ zum Rechtsklick im Edit-Tool (intended für Trackpads)

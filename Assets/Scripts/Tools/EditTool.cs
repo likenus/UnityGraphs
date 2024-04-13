@@ -37,10 +37,10 @@ public class EditTool : ITool
 			{
 				Vector3 pointToMove = hit.point + offset;
 				if (snapping)
-					selectedForMove.transform.position =
+					selectedForMove.transform.localPosition =
 						new Vector3((float)Math.Round(pointToMove.x), (float)Math.Round(pointToMove.y), 0);
 				if (!snapping)
-					selectedForMove.transform.position = new Vector3(pointToMove.x, pointToMove.y, 0);
+					selectedForMove.transform.localPosition = new Vector3(pointToMove.x, pointToMove.y, 0);
 			}
 		}
 	}
@@ -54,7 +54,7 @@ public class EditTool : ITool
 			if (hit.collider.gameObject.TryGetComponent<Vertex>(out leftClickCache))
 			{
 				selectedForMove = hit.collider.gameObject;
-				offset = selectedForMove.transform.position - new Vector3(hit.point.x, hit.point.y, 0);
+				offset = selectedForMove.transform.localPosition - new Vector3(hit.point.x, hit.point.y, 0);
 				oldColors.Add(leftClickCache, leftClickCache.gameObject.GetComponent<Renderer>().material.color); // Color can be wrong, might fix
 				selectedForMove.GetComponent<Renderer>().material.color = selectColor;
 
@@ -79,11 +79,21 @@ public class EditTool : ITool
 				edge.Weight = value;
 			}
 		}
+		else if (Physics.Raycast(ray, out hit, 100, colliderLayer))
+		{
+			selectedForMove = graph.gameObject;
+			offset = selectedForMove.transform.position - new Vector3(hit.point.x, hit.point.y, 0);
+		}
 	}
 
 	public void LeftReleased(InputAction.CallbackContext context)
 	{
 		if (selectedForMove == null) { return; }
+		if (selectedForMove.Equals(graph.gameObject))
+		{
+			selectedForMove = null;
+			return;
+		}
 		selectedForMove.GetComponent<Renderer>().material.color = oldColors[leftClickCache];
 		foreach (Vertex vertex in graph.NeighboursOf(leftClickCache).Item1)
 		{
