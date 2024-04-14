@@ -117,6 +117,7 @@ public class MenuManager : MonoBehaviour
 
 	public void OnLoadClick(string fileName)
 	{
+		DataPersistenceManager.Instance.SaveGame();
 		DataPersistenceManager.Instance.FileName = fileName;
 		DataPersistenceManager.Instance.LoadGame();
 		TogglePauseMenu();

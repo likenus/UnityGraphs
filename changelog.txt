@@ -3,6 +3,7 @@ To be implemented:
 - Weitere Algorithmen
 - Färbbare Knoten   
 - Hotkeys
+- Offene Datei irgendwo vermerken
 
 Version 1.3.0
 - Neue Algorithmen: Prim & Kruskal (+ interner UnionFind)

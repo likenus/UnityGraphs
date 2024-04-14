@@ -239,6 +239,7 @@ public class Graph : MonoBehaviour, IDataPersistence
 
 	public void Clear()
 	{
+		transform.position = new Vector3();
 		foreach (Vertex v in new List<Vertex>(Vertices.Values))
 		{
 			RemoveVertex(v);
