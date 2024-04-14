@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,16 +27,23 @@ public class AlgorithmManager : MonoBehaviour
 	}
 	public void RunAlgorithm()
 	{
+		Reset();
 		switch (algorithmId.value)
 		{
 			case 0 :
-				BFS();
+				StartCoroutine(DoBFS());
 				break;
 			case 1 :
-				DFS();
+				StartCoroutine(DoDFS(graph.StartVertex, null));
 				break;
 			case 2 :
-				Dijkstra();
+				StartCoroutine(DoDijkstra());
+				break;
+			case 3 :
+				StartCoroutine(DoPrim());
+				break;
+			case 4 :
+				StartCoroutine(DoKruskal());
 				break;
 			default :
 				return;
@@ -44,24 +53,6 @@ public class AlgorithmManager : MonoBehaviour
 	public void UpdateSlider()
 	{
 		animationSpeed = slider.value;
-	}
-	
-	private void BFS()
-	{
-		Reset();
-		StartCoroutine(DoBFS());
-	}
-	
-	private void DFS()
-	{
-		Reset();
-		StartCoroutine(DoDFS(graph.StartVertex, null));
-	}
-	
-	private void Dijkstra()
-	{
-		Reset();
-		StartCoroutine(DoDijkstra());
 	}
 	
 	private IEnumerator DoBFS()
@@ -134,7 +125,7 @@ public class AlgorithmManager : MonoBehaviour
 			heap.Push(v, distances[v.id]);
 		}
 		
-		while (heap.Size > 0)
+		while (heap.Count > 0)
 		{
 			Vertex u = heap.PopMin();
 			u.Paint();
@@ -195,6 +186,91 @@ public class AlgorithmManager : MonoBehaviour
 				PlayBackSystem.DoAlgorithmStep = false;	
 			}
 			yield return StartCoroutine(DoDFS(u, s));
+		}
+	}
+	
+	private IEnumerator DoPrim()
+	{
+		if (graph.IsDirected)
+		{
+			Debug.LogError("Cant to Prim on directed graph.");
+			yield break;
+		}
+		
+		long[] priorities = new long[graph.Vertices.Count];
+		Vertex[] parents = new Vertex[graph.Vertices.Count];
+		for (int i = 0; i < priorities.Length; i++)
+		{
+			priorities[i] = int.MaxValue;
+		}
+		priorities[graph.StartVertex.id] = 0;
+		
+		BinaryHeap heap = new(graph.Vertices.Count);
+		foreach (Vertex v in graph.Vertices.Values)
+		{
+			heap.Push(v, priorities[v.id]);
+		}
+		
+		while (heap.Count > 0)
+		{
+			Vertex v = heap.PopMin();
+			v.Paint();
+			if (parents[v.id] != null)
+				graph.EdgeBetween(parents[v.id], v).Paint();
+			
+			if (!PlayBackSystem.Paused)
+				{
+					yield return new WaitForSecondsRealtime(1f / animationSpeed);
+				}
+				if (PlayBackSystem.Paused)
+				{
+					yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+					PlayBackSystem.DoAlgorithmStep = false;	
+				}
+			
+			foreach (Vertex u in graph.NeighboursOf(v).Item1)
+			{
+				Edge edge = graph.EdgeBetween(u, v);
+				if (!u.Colored && priorities[u.id] > edge.Weight)
+				{
+					priorities[u.id] = edge.Weight;
+					heap.DecPrio(u, edge.Weight);
+					parents[u.id] = v;
+				}
+			}
+		}
+	}
+	
+	private IEnumerator DoKruskal()
+	{
+		if (graph.IsDirected)
+		{
+			Debug.LogError("Cant do Kruskal on directed graph.");
+			yield break;
+		}
+		
+		// Get all Edges and sort them
+		List<Edge> edges = graph.Edges.OrderBy(e => e.Weight).ToList();
+		UnionFind unionFind = new(edges.Count);
+		
+		foreach (Edge e in edges)
+		{
+			if (unionFind.Find(e.vertices.Item1.id) != unionFind.Find(e.vertices.Item2.id))
+			{
+				e.vertices.Item1.Paint();
+				e.vertices.Item2.Paint();
+				e.Paint();
+				unionFind.Union(e.vertices.Item1.id, e.vertices.Item2.id);
+				if (!PlayBackSystem.Paused)
+				{
+					yield return new WaitForSecondsRealtime(1f / animationSpeed);
+				}
+				if (PlayBackSystem.Paused)
+				{
+					yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+					PlayBackSystem.DoAlgorithmStep = false;	
+				}
+			}
 		}
 	}
 	

@@ -5,7 +5,7 @@ public class BinaryHeap
 	private readonly Vertex[] content;
 	private readonly long[] priorities;
 	private readonly int[] indices;
-	public int Size { get; set; } = 0;
+	public int Count { get; set; } = 0;
 	
 	public BinaryHeap(int capacity)
 	{
@@ -17,36 +17,36 @@ public class BinaryHeap
 	
 	public void Push(Vertex v, long priority)
 	{
-		content[Size] = v;
+		content[Count] = v;
 		priorities[v.id] = priority;
-		indices[v.id] = Size;
-		Size++;
-		BubbleUp(content[Size - 1]);
+		indices[v.id] = Count;
+		Count++;
+		BubbleUp(content[Count - 1]);
 	}
 	
 	public Vertex PopMin()
 	{
 		Vertex v = content[0];
-		Swap(v, content[Size - 1]);
-		content[Size - 1] = null;
+		Swap(v, content[Count - 1]);
+		content[Count - 1] = null;
 		SetPrio(v, -1);
 		indices[v.id] = -1;
-		Size--;
-		if (Size > 0)
+		Count--;
+		if (Count > 0)
 			SinkDown(content[0]);
 		return v;
 	}
 	
 	private Vertex LeftChild(Vertex v)
 	{
-		if (2 * IndexOf(v) + 1 < Size)
+		if (2 * IndexOf(v) + 1 < Count)
 			return content[2 * IndexOf(v) + 1];
 		return null;
 	}
 	
 	private Vertex RightChild(Vertex v)
 	{
-		if (2 * IndexOf(v) + 2 < Size)
+		if (2 * IndexOf(v) + 2 < Count)
 			return content[2 * IndexOf(v) + 2];
 		return null;
 	}
@@ -83,11 +83,11 @@ public class BinaryHeap
 		Vertex uR = RightChild(v);
 		Vertex u = v;
 		
-		if (uL != null && IndexOf(uL) < Size && GetPrio(uL) < GetPrio(u))
+		if (uL != null && IndexOf(uL) < Count && GetPrio(uL) < GetPrio(u))
 		{
 			u = uL;
 		}
-		if (uR != null && IndexOf(uR) < Size && GetPrio(uR) < GetPrio(u))
+		if (uR != null && IndexOf(uR) < Count && GetPrio(uR) < GetPrio(u))
 		{
 			u = uR;
 		}
