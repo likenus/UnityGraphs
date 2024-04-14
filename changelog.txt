@@ -4,6 +4,9 @@ To be implemented:
 - Färbbare Knoten   
 - Hotkeys
 
+Version 1.3.0
+- Neue Algorithmen: Prim & Kruskal (+ interner UnionFind)
+
 Version 1.2.0
 - Algorithmen haben jetzt ein Play-Back-System mit Stop/Reset, Pause/Play [Space], StepForward [.]
 - UI matched nun Auflösung
