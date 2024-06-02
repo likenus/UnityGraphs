@@ -41,18 +41,26 @@ public class DataPersistenceManager : MonoBehaviour
 
 	private void Start()
 	{
+		// First Load Settings
 		programmData = new ProgrammData();
 		dirPath = Path.Combine(Path.GetFullPath("."), "Data"); // Alternatively use Application.persistentFilePath
-		gameDataHandler = new FileDataHandler(Path.Combine(dirPath, graphDir), FileName); 
 		programmDataHandler = new FileDataHandler(Path.Combine(dirPath, settingsDir), settingFileName);
-		dataPersistenceObjects = FindAllDataPersistenceObjects();
 		LoadSettings();
+		
+		// Then Load Game Data
+		gameDataHandler = new FileDataHandler(Path.Combine(dirPath, graphDir), FileName); 
+		dataPersistenceObjects = FindAllDataPersistenceObjects();
 		LoadGame();
 	}
 
 	public void NewGame()
 	{
 		gameData = new GameData();
+		foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+		{
+			dataPersistenceObj.LoadData(gameData);
+		}
+		Debug.Log("Successfully loaded all game data.");
 	}
 
 	public void LoadGame()
@@ -85,6 +93,7 @@ public class DataPersistenceManager : MonoBehaviour
 			return;
 		}
 		
+		Debug.Log("Loaded " + programmData.fileName);
 		FileName = programmData.fileName;
 		Debug.Log("Successfully loaded all settings.");
 	}

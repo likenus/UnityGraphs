@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour
 	public InputController inputManager;
 	public CameraController cameraController;
 	private PauseMenuActions inputActions;
+	private bool pbsWasPaused;
 
 	private void Start()
 	{
@@ -47,13 +48,40 @@ public class MenuManager : MonoBehaviour
 
 	public void TogglePauseMenu()
 	{
-		PlayBackSystem.TogglePause();
-		Paused = PlayBackSystem.Paused;
-
-		cameraController.enabled = !Paused;
-		inputManager.gameObject.SetActive(!Paused);
-		gameUI.enabled = !Paused;
-		pauseUI.enabled = Paused;
+		if (!Paused) 
+		{
+			OnPause();
+		} else 
+		{
+			OnUnPause();
+		}
+		
+		Paused = !Paused;
+	}
+	
+	private void OnPause()
+	{
+		pbsWasPaused = PlayBackSystem.Paused;
+		PlayBackSystem.SetPause(true);
+		
+		cameraController.enabled = false;
+		inputManager.gameObject.SetActive(false);
+		gameUI.enabled = false;
+		pauseUI.enabled = true;
+		saveUI.enabled = loadUI.enabled = false;
+	}
+	
+	private void OnUnPause() 
+	{
+		if (!pbsWasPaused) 
+		{
+			PlayBackSystem.SetPause(false);
+		}
+		
+		cameraController.enabled = true;
+		inputManager.gameObject.SetActive(true);
+		gameUI.enabled = true;
+		pauseUI.enabled = false;
 		saveUI.enabled = loadUI.enabled = false;
 	}
 
@@ -79,7 +107,7 @@ public class MenuManager : MonoBehaviour
 		inputManager.graph.Clear();
 		DataPersistenceManager.Instance.NewGame();
 		DataPersistenceManager.Instance.FileName = "";
-		DataPersistenceManager.Instance.LoadGame();
+		TogglePauseMenu();
 	}
 
 	public void SaveGraph()

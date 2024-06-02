@@ -1,12 +1,14 @@
 To be implemented:
 - Tooltips, Hilfe-menu
 - Weitere Algorithmen
-- Färbbare Knoten   
+- Färbbare Knoten
 - Hotkeys
 - Offene Datei irgendwo vermerken
 
 Version 1.3.0
 - Neue Algorithmen: Prim & Kruskal (+ interner UnionFind)
+- Fix v1.3.1: Graphposition wird on load auf 0 gesetzt und Safe&Load funktioniert jetzt wie erwartet
+- Change v1.3.2: Small QoL changes
 
 Version 1.2.0
 - Algorithmen haben jetzt ein Play-Back-System mit Stop/Reset, Pause/Play [Space], StepForward [.]

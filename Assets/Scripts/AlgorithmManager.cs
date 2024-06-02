@@ -64,15 +64,7 @@ public class AlgorithmManager : MonoBehaviour
 		graph.StartVertex.Text = distances[graph.StartVertex.id].ToString();
 		q.Enqueue(graph.StartVertex);
 
-		if (!PlayBackSystem.Paused)
-		{
-			yield return new WaitForSecondsRealtime(1f / animationSpeed);
-		}
-		else 
-		{
-			yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
-			PlayBackSystem.DoAlgorithmStep = false;
-		}
+		yield return Wait();
 
 		while (q.Count > 0)
 		{
@@ -95,15 +87,7 @@ public class AlgorithmManager : MonoBehaviour
 				w.Text = distances[w.id].ToString();
 				q.Enqueue(w);
 
-				if (!PlayBackSystem.Paused)
-				{
-					yield return new WaitForSecondsRealtime(1f / animationSpeed);
-				}
-				if (PlayBackSystem.Paused)
-				{
-					yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
-					PlayBackSystem.DoAlgorithmStep = false;
-				}
+				yield return Wait();
 			}
 		}
 	}
@@ -133,15 +117,7 @@ public class AlgorithmManager : MonoBehaviour
 			if (parents[u.id] != null)
 				graph.EdgeBetween(parents[u.id], u).Paint();
 				
-			if (!PlayBackSystem.Paused)
-			{
-				yield return new WaitForSecondsRealtime(1f / animationSpeed);
-			}
-			if (PlayBackSystem.Paused)
-			{
-				yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
-				PlayBackSystem.DoAlgorithmStep = false;
-			}
+			yield return Wait();
 			
 			foreach (Vertex v in graph.NeighboursOf(u).Item1)
 			{
@@ -176,15 +152,7 @@ public class AlgorithmManager : MonoBehaviour
 		foreach (Vertex u in graph.NeighboursOf(s).Item1)
 		{
 			if (u == p || u.Colored) { continue; }
-			if (!PlayBackSystem.Paused)
-			{
-				yield return new WaitForSecondsRealtime(1f / animationSpeed);
-			}
-			if (PlayBackSystem.Paused)
-			{
-				yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
-				PlayBackSystem.DoAlgorithmStep = false;	
-			}
+			yield return Wait();
 			yield return StartCoroutine(DoDFS(u, s));
 		}
 	}
@@ -218,15 +186,7 @@ public class AlgorithmManager : MonoBehaviour
 			if (parents[v.id] != null)
 				graph.EdgeBetween(parents[v.id], v).Paint();
 			
-			if (!PlayBackSystem.Paused)
-				{
-					yield return new WaitForSecondsRealtime(1f / animationSpeed);
-				}
-				if (PlayBackSystem.Paused)
-				{
-					yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
-					PlayBackSystem.DoAlgorithmStep = false;	
-				}
+			yield return Wait();
 			
 			foreach (Vertex u in graph.NeighboursOf(v).Item1)
 			{
@@ -261,19 +221,23 @@ public class AlgorithmManager : MonoBehaviour
 				e.vertices.Item2.Paint();
 				e.Paint();
 				unionFind.Union(e.vertices.Item1.id, e.vertices.Item2.id);
-				if (!PlayBackSystem.Paused)
-				{
-					yield return new WaitForSecondsRealtime(1f / animationSpeed);
-				}
-				if (PlayBackSystem.Paused)
-				{
-					yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
-					PlayBackSystem.DoAlgorithmStep = false;	
-				}
+				yield return Wait();
 			}
 		}
 	}
 	
+	private IEnumerator Wait()
+	{
+		if (!PlayBackSystem.Paused)
+		{
+			yield return new WaitForSecondsRealtime(1f / animationSpeed);
+		}
+		if (PlayBackSystem.Paused)
+		{
+			yield return new WaitUntil(() => PlayBackSystem.DoAlgorithmStep);
+			PlayBackSystem.DoAlgorithmStep = false;	
+		}
+	}
 	public void Reset()
 	{
 		StopAllCoroutines();

@@ -50,9 +50,18 @@ public class PlayBackSystem : MonoBehaviour
 
 	public static void TogglePause()
 	{
+		Debug.Log("Toggled Playbacksystem");
 		DoAlgorithmStep = Paused;
 		Paused = !Paused;
 		if (Paused) { Time.timeScale = 0; }
 		else { Time.timeScale = 1; }
+	}
+	
+	public static void SetPause(bool pause) 
+	{
+		if (pause != Paused) 
+		{
+			TogglePause();
+		}
 	}
 }
